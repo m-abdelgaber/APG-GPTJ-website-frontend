@@ -307,7 +307,7 @@ function App() {
           
           <Box margin={'auto'}sx={{ color : "#ffffff", bgcolor:"#808080"}}>
             <Tooltip title= {message} arrow>
-              <Button  tool variant="solid" disabled={false} onClick={getAnother}>view another poem</Button>
+              <Button  tool variant="solid" disabled={false} onClick={getAnother}>view another poem | عرض شعر آخر</Button>
             </Tooltip>
           </Box>
         </Box>
