@@ -10,24 +10,9 @@ import Box from '@mui/system/Box';
 import ThemeProvider from '@mui/system/ThemeProvider' 
 import createTheme from '@mui/system/createTheme' 
 import Button from '@mui/joy/Button';
+import Tooltip from '@mui/material/Tooltip';
 
-const theme = createTheme({
-  palette: {
-    background: {
-      paper: '#fff',
-    },
-    text: {
-      primary: '#173A5E',
-      secondary: '#46505A',
-    },
-    action: {
-      active: '#001E3C',
-    },
-    success: {
-      dark: '#009688',
-    },
-  },
-});
+
 
 function App() {
 
@@ -37,7 +22,8 @@ function App() {
   const [qafyasValue, setQafyasValue] = useState([]);
   const [poemsValue, setPoemsValue] = useState([]);
   const [verses, setVerses] = useState();
-
+  const [message, setMessage] = useState("");
+  
   const [poemIndex, setPoemIndex] = useState(0);
   const [selectedModel, setSelectedModel] = useState('');
   const [selectedMeter, setSelectedMeter] = useState('');
@@ -88,8 +74,8 @@ function App() {
     // console.log("model changed")
     if(selectedModel !==''){
       getPoems();
-      
     }
+    setPoemIndex(0);
   }, [selectedModel, selectedMeter, selectedTopic, selectedQafya]);
   useEffect(() => {
     
@@ -103,8 +89,8 @@ function App() {
       setVerses(formatted.map((verse) =>
       <p>{verse}</p>
       ))
-      
     }
+    setMessage("poems available: " + poemIndex +"/" + poemsValue.length);
   }, [poemIndex]);
 
   const getModels = () => {
@@ -217,6 +203,7 @@ function App() {
   const getAnother = (e) => {
     const limit = (poemsValue.length=== 0)?1:poemsValue.length;
     setPoemIndex((poemIndex+1)%limit);
+    setMessage("poems available: " + poemIndex +"/" + poemsValue.length);
   };
 
   return (
@@ -289,7 +276,9 @@ function App() {
         <Box margin={'auto'} width={400} alignContent={'center'}>{verses}</Box>
         
         <Box margin={'auto'}sx={{ color : "#ffffff", bgcolor:"#808080"}}>
-          <Button variant="solid" disabled={false} onClick={getAnother}>view another poem</Button>
+          <Tooltip title= {message} arrow>
+            <Button  tool variant="solid" disabled={false} onClick={getAnother}>view another poem</Button>
+          </Tooltip>
         </Box>
       </Box>
     </Box>
