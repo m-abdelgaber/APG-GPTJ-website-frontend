@@ -7,11 +7,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/system/Box';
-import ThemeProvider from '@mui/system/ThemeProvider' 
-import createTheme from '@mui/system/createTheme' 
+
 import Button from '@mui/joy/Button';
 import Tooltip from '@mui/material/Tooltip';
-
+import Footer from "./Footer";
 
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
   const [qafyasValue, setQafyasValue] = useState([]);
   const [poemsValue, setPoemsValue] = useState([]);
   const [verses, setVerses] = useState();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("pick more parameters | اختار مدخلات إضافية");
   
   const [poemIndex, setPoemIndex] = useState(0);
   const [selectedModel, setSelectedModel] = useState('');
@@ -76,6 +75,12 @@ function App() {
       getPoems();
     }
     setPoemIndex(0);
+    if(poemsValue.length===0){
+      setMessage("pick more parameters | اختار مدخلات إضافية");
+    }
+    else{
+      setMessage("poems available: " + (poemIndex +1) +"/" + poemsValue.length);
+    }
   }, [selectedModel, selectedMeter, selectedTopic, selectedQafya]);
   useEffect(() => {
     
@@ -90,8 +95,23 @@ function App() {
       <p>{verse}</p>
       ))
     }
-    setMessage("poems available: " + poemIndex +"/" + poemsValue.length);
+    if(poemsValue.length===0){
+      setMessage("pick more parameters | اختار مدخلات إضافية");
+    }
+    else{
+      setMessage("poems available: " + (poemIndex +1) +"/" + poemsValue.length);
+    }
   }, [poemIndex]);
+
+  useEffect(() => {
+
+    if(poemsValue.length===0){
+      setMessage("pick more parameters | اختار مدخلات إضافية");
+    }
+    else{
+      setMessage("poems available: " + (poemIndex +1) +"/" + poemsValue.length);
+    }
+  }, [poemsValue]);
 
   const getModels = () => {
     axios
@@ -203,89 +223,99 @@ function App() {
   const getAnother = (e) => {
     const limit = (poemsValue.length=== 0)?1:poemsValue.length;
     setPoemIndex((poemIndex+1)%limit);
-    setMessage("poems available: " + poemIndex +"/" + poemsValue.length);
+    if(poemsValue.length===0){
+      setMessage("pick more parameters | اختار مدخلات إضافية");
+    }
+    else{
+      setMessage("poems available: " + (poemIndex+1) +"/" + poemsValue.length);
+    }
   };
 
   return (
-    <Box margin='auto' sx={{display: 'flex', gap: 2, flexWrap: 'wrap' ,minWidth: 120 , maxWidth: 600}}>
-      <Box
-      margin={'auto'}
-      component="img"
-      sx={{
-        height: 115,
-        width: 250,
-        minWidth: 125 ,
-        maxWidth: 500
-      }}
-      alt="GUC logo"
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/German_University_in_Cairo_Logo.jpg/1920px-German_University_in_Cairo_Logo.jpg"
-      />
-      <Box  margin='auto' textAlign={'center'} >
-        <h1>GPT-J poems</h1>
-        <p>Disclaimer: The poems shown here are pre-generated. The model currently isn't live</p>
-        <p></p>
-      </Box>
-      <Box gap={2} margin='auto' width={400} maxWidth ={500} display= {'flex'} flexWrap= {'wrap'} textAlign={'center'}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Model</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={selectedModel}
-            label="Model"
-            onChange={handleChangeModel}
-          >
-            {modelsList}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth disabled = {noMeter}>
-          <InputLabel id="demo-simple-select-label">Meter</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={selectedMeter}
-            label="Meter"
-            onChange={handleChangeMeter}
-          >
-            {metersList}
-          </Select>
-        </FormControl>
+    <>
+      <Box margin='auto' sx={{display: 'flex', gap: 2, flexWrap: 'wrap' ,minWidth: 120 , maxWidth: 600}}>
+        <Box
+        margin={'auto'}
+        component="img"
+        sx={{
+          height: 115,
+          width: 250,
+          minWidth: 125 ,
+          maxWidth: 500
+        }}
+        alt="GUC logo"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/German_University_in_Cairo_Logo.jpg/1920px-German_University_in_Cairo_Logo.jpg"
+        />
+        <Box  margin='auto' textAlign={'center'} >
+          <h1>GPT-J poems</h1>
+          <p>Disclaimer: The poems shown here are pre-generated. The model currently isn't live.</p>
+          <p>ملحوظة: الأشعار المعروضة أنتجها النموذج في وقت سابق</p>
+        </Box>
+        <Box gap={2} margin='auto' width={400} maxWidth ={500} display= {'flex'} flexWrap= {'wrap'} textAlign={'center'}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Model | النموذج</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedModel}
+              label="Model"
+              onChange={handleChangeModel}
+            >
+              {modelsList}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth disabled = {noMeter}>
+            <InputLabel id="demo-simple-select-label">Meter | البحر</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedMeter}
+              label="Meter"
+              onChange={handleChangeMeter}
+            >
+              {metersList}
+            </Select>
+          </FormControl>
 
-        <FormControl fullWidth disabled ={noTopic}>
-          <InputLabel id="demo-simple-select-label">Topic</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={selectedTopic}
-            label="Topic"
-            onChange={handleChangeTopic}
-          >
-            {topicsList}
-          </Select>
-        </FormControl>
+          <FormControl fullWidth disabled ={noTopic}>
+            <InputLabel id="demo-simple-select-label">Topic | الموضوع</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedTopic}
+              label="Topic"
+              onChange={handleChangeTopic}
+            >
+              {topicsList}
+            </Select>
+          </FormControl>
 
-        <FormControl fullWidth disabled={noQafya}>
-          <InputLabel id="demo-simple-select-label">Qafya</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={selectedQafya}
-            label="Qafya"
-            onChange={handleChangeQafya}
-          >
-            {qafyasList}
-          </Select>
-        </FormControl>
-      
-        <Box margin={'auto'} width={400} alignContent={'center'}>{verses}</Box>
+          <FormControl fullWidth disabled={noQafya}>
+            <InputLabel id="demo-simple-select-label">Qafya | القافية</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedQafya}
+              label="Qafya"
+              onChange={handleChangeQafya}
+            >
+              {qafyasList}
+            </Select>
+          </FormControl>
         
-        <Box margin={'auto'}sx={{ color : "#ffffff", bgcolor:"#808080"}}>
-          <Tooltip title= {message} arrow>
-            <Button  tool variant="solid" disabled={false} onClick={getAnother}>view another poem</Button>
-          </Tooltip>
+          <Box margin={'auto'} width={400} alignContent={'center'}>{verses}</Box>
+          
+          <Box margin={'auto'}sx={{ color : "#ffffff", bgcolor:"#808080"}}>
+            <Tooltip title= {message} arrow>
+              <Button  tool variant="solid" disabled={false} onClick={getAnother}>view another poem</Button>
+            </Tooltip>
+          </Box>
         </Box>
       </Box>
-    </Box>
+      <Box marginBottom={2}>
+        <Footer />
+      </Box>
+    </>
   );
 }
 
