@@ -304,7 +304,7 @@ function App() {
           </FormControl>
         
           <Box margin={'auto'} width={400} alignContent={'center'}>{verses}</Box>
-          
+          <Box margin={'auto'} width={400} alignContent={'center'} color = "#ff5555">{message}</Box>
           <Box margin={'auto'}sx={{ color : "#ffffff", bgcolor:"#808080"}}>
             <Tooltip title= {message} arrow>
               <Button  tool variant="solid" disabled={false} onClick={getAnother}>view another poem | عرض شعر آخر</Button>
