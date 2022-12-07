@@ -109,7 +109,7 @@ function App() {
 
   const getModels = () => {
     axios
-    .get("http://localhost:3001/getModels")
+    .get("https://apg-gptj-api.onrender.com/getModels")
     .then(response => {
       const models = response.data;
       setModelsValue(models);
@@ -120,7 +120,7 @@ function App() {
 
   const getMeters = () => {
     axios
-    .get("http://localhost:3001/getMeters")
+    .get("https://apg-gptj-api.onrender.com/getMeters")
     .then(response => {
       const meters = response.data;
       setMetersValue(meters);
@@ -130,7 +130,7 @@ function App() {
   };
   const getTopics = () => {
     axios
-    .get("http://localhost:3001/getTopics")
+    .get("https://apg-gptj-api.onrender.com/getTopics")
     .then(response => {
       const topics = response.data;
       setTopicsValue(topics);
@@ -141,7 +141,7 @@ function App() {
 
   const getQafyas = () => {
     axios
-    .get("http://localhost:3001/getQafyas")
+    .get("https://apg-gptj-api.onrender.com/getQafyas")
     .then(response => {
       const qafyas = response.data;
       setQafyasValue(qafyas);
@@ -153,7 +153,7 @@ function App() {
   const getPoems = () => {
     // console.log("here");
     axios
-    .get("http://localhost:3001/getPoemsOfMeterModel", {
+    .get("https://apg-gptj-api.onrender.com/getPoemsOfMeterModel", {
         params: {
           meter: selectedMeter,
           model: selectedModel,
