@@ -16,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 function App() {
 
-  const [modelsValue, setModelsValue] = useState([]);
+  const [modelsValue, setModelsValue] = useState(['Meter', 'Meter & Qafya', 'Topic', 'Topic & Qafya']);
   const [metersValue, setMetersValue] = useState([]);
   const [topicsValue, setTopicsValue] = useState([]);
   const [qafyasValue, setQafyasValue] = useState([]);
@@ -220,7 +220,11 @@ function App() {
       alt="GUC logo"
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/German_University_in_Cairo_Logo.jpg/1920px-German_University_in_Cairo_Logo.jpg"
       />
-      <Box  margin='auto' ><h1>View GPT-J generated poetry</h1></Box>
+      <Box  margin='auto' textAlign={'center'} >
+        <h1>GPT-J poems</h1>
+        <p>Disclaimer: The poems shown here are pre-generated. The model currently isn't live</p>
+        <p></p>
+      </Box>
       <Box gap={2} margin='auto' width={400} maxWidth ={500} display= {'flex'} flexWrap= {'wrap'} textAlign={'center'}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Model</InputLabel>
