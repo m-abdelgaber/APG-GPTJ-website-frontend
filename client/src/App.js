@@ -312,7 +312,7 @@ function App() {
           </Box>
         </Box>
       </Box>
-      <Box marginBottom={2}>
+      <Box marginBottom={2} marginTop = {2}>
         <Footer />
       </Box>
     </>
